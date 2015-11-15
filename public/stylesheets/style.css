@@ -1,0 +1,25 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+.menubar {
+    margin: 0 0 10px 0;
+    padding: 0;
+    background: dodgerblue;
+}
+
+.menuitem {
+    display: inline-block;
+    width: 160px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    margin: 0;
+    background: dodgerblue;
+    color: darkblue;
+    border: 1px solid dodgerblue;
+    cursor: pointer;
+}
+

@@ -1,0 +1,21 @@
+extends ./layout.jade
+
+block content
+    h1 Welcome #{username}!
+
+    div#create-question
+        form(method='POST', action='/questions')
+            div
+                label(for='question') Question:
+                input(type='text', name='question', placeholder='What\'s the meaning of life?')
+            div
+                label(for='password') Answer:
+                input(type='text', name='answer', placeholder='42')
+            div
+                input(type='submit', value='Create Question')
+    hr
+    ul
+        each question in questions
+            li 
+                a(href="/questions/" + question.id) #{question.question}
+

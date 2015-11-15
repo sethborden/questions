@@ -1,0 +1,18 @@
+doctype
+html
+    head
+        title Challenge Mode
+        link(rel='stylesheet', href='/stylesheets/style.css')
+    body
+        ul.menubar
+            li.menuitem
+                a(href='/home') Home
+            li.menuitem
+                a(href='/random')  Random Question
+            li.menuitem
+                a(href='/logout') Logout
+        -if(message)
+            .alert !{message}
+        block content
+
+

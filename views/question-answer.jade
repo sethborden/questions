@@ -1,0 +1,13 @@
+extends ./layout.jade
+
+block content
+    h2 Answer Question
+    div#edit-question
+        form(method='POST', action='/questions/' + id)
+            div
+                !{question}
+            div
+                label(for='password') Answer:
+                input(type='text', name='answer')
+            div
+                input(type='submit', value='Answer Question')

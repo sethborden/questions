@@ -1,0 +1,14 @@
+# npm stuff
+*.log
+*.gz
+node_modules
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# Vim stuff
+*.swp
+
+#environment and database
+*.db

@@ -1,0 +1,14 @@
+extends ./layout.jade
+
+block content
+    h2 Edit Question
+    div#edit-question
+        form(method='POST', action='/questions/' + id)
+            div
+                label(for='question') Question:
+                input(type='text', name='question', value=question)
+            div
+                label(for='password') Answer:
+                input(type='text', name='answer', value=answer)
+            div
+                input(type='submit', value='Update Question')

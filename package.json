@@ -1,0 +1,35 @@
+{
+  "name": "questions",
+  "version": "1.0.0",
+  "description": "Log in, create some questions, and answer other peoples' questions. Woo.",
+  "main": "server.js",
+  "readme": "README.md",
+  "scripts": {
+    "test": "grunt test",
+    "start": "node server.js"
+  },
+  "keywords": [
+    "questions",
+    "node",
+    "sequelize",
+    "express"
+  ],
+  "author": "Seth Borden",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.14.1",
+    "express": "^4.13.3",
+    "express-session": "^1.12.1",
+    "jade": "^1.11.0",
+    "sequelize": "^3.13.0",
+    "sqlite3": "^3.1.1"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-browser-sync": "^2.2.0",
+    "grunt-browserify": "^4.0.1",
+    "grunt-contrib-jshint": "^0.11.3",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-express-server": "^0.5.1"
+  }
+}
