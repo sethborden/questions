@@ -23,7 +23,7 @@ module.exports = function(app) {
         console.log(req.body.username);
         models.User.findOne({where: {username: req.body.username}})
         .then(function(user) {
-            console.log(user.password, req.body.password);
+            if(!user) { res.redirect('/login'); }
             if(user.password === req.body.password) {
                 req.session.user = user;
                 res.redirect('/home');
@@ -98,24 +98,47 @@ module.exports = function(app) {
         if(req.session.user) {
             //TODO there is a clever SQL query that would give me all the
             //unaswered questions here...figure out what it is.
+
+            //First get all the questions that the user has answered
             models.UserQuestions.findAll({where: {UserId: req.session.user.id}})
+
+            //Then we invert that and select all the questions that the user has
+            //*NOT* answered. 
             .then(function(answeredQuestions) {
+                //Get all of the unique questions that we've answered and counts
+                //This would be so much easier in python....
                 var uniqueAnsweredQuestions = (function(a) {
-                    return a.reduce(function(p, c) {
-                        if(p.indexOf(c.QuestionId) < 0) { p.push(c.QuestionId); }
-                        return p;
-                    }, []);
+                    var collector = {};
+                    a.forEach(function(q) {
+                        if(collector[q.id]) {
+                            collector[q.id]++;
+                        } else {
+                            collector[q.id] = 1;
+                        }
+                    });
+                    collector.length = Object.keys(collector).length;
+                    //evil hack to convert an array in to a bunch or args,
+                    //spread operator not supported in nodejs without flags.
+                    collector.max = Math.max.apply(null, Object.keys(collector).map(function(q) { 
+                        return q.count;
+                    }));
+                    return collector;
                 }(answeredQuestions));
+
+                //If we haven't answered anything, select a random question from
+                //all the questions.
                 if(uniqueAnsweredQuestions.length === 0) {
                     return models.Question.findAll({
                         where: {
                             UserId: {$ne: req.session.user.id}
                         }
                     });
+                //Otherwise select a random question from amongst those that
+                //haven't been answered.
                 } else {
                     return models.Question.findAll({
                         where: {
-                            id: {$notIn: uniqueAnsweredQuestions}, 
+                            id: {$notIn: Object.keys(uniqueAnsweredQuestions)}, 
                             UserId: {$ne: req.session.user.id}
                         }
                     }); //return a Promise
