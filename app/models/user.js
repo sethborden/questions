@@ -8,7 +8,12 @@ module.exports = function(sequelize, DataTypes) {
         classMethods: {
             associate: function(models) {
                 User.hasMany(models.Question);
-                User.belongsToMany(models.Question, {through: models.UserQuestions});
+                User.belongsToMany(models.Question, {
+                    through: {
+                        model: models.UserQuestions,
+                        unique: false
+                    }
+                });
             }
         }
     });

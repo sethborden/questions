@@ -35,15 +35,23 @@ module.exports = function(grunt) {
                 files: ['<%= jshint.files %>'],
                 tasks: ['jshint']
             }
+        },
+        'node-inspector': {
+            dev: {}
         }
     });
 
-    grunt.loadNpmTasks('grunt-contrib-jshint');
-    grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.loadNpmTasks('grunt-browserify');
-    grunt.loadNpmTasks('grunt-express-server');
+    ['grunt-contrib-jshint',
+     'grunt-contrib-watch',
+     'grunt-browserify',
+     'grunt-express-server',
+     'grunt-node-inspector'
+    ].forEach(function(task) {
+        grunt.loadNpmTasks(task);
+    });
 
     grunt.registerTask('default', ['jshint', 'browserify', 'watch']);
-    grunt.registerTask('serve', ['jshint', 'browserify', 'express:dev', 'watch']);
+    grunt.registerTask('serve', ['jshint', 'express:dev', 'watch']);
+    grunt.registerTask('debug', ['jshint', 'express:dev', 'node-inspector']);
 
 };

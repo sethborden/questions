@@ -96,57 +96,59 @@ module.exports = function(app) {
     //Redirects to a random, unanswered question
     app.get('/random', function(req, res) {
         if(req.session.user) {
-            //TODO there is a clever SQL query that would give me all the
-            //unaswered questions here...figure out what it is.
-
-            //First get all the questions that the user has answered
-            models.UserQuestions.findAll({where: {UserId: req.session.user.id}})
-
-            //Then we invert that and select all the questions that the user has
-            //*NOT* answered. 
-            .then(function(answeredQuestions) {
-                //Get all of the unique questions that we've answered and counts
-                //This would be so much easier in python....
-                var uniqueAnsweredQuestions = (function(a) {
-                    var collector = {};
-                    a.forEach(function(q) {
-                        if(collector[q.id]) {
-                            collector[q.id]++;
-                        } else {
-                            collector[q.id] = 1;
-                        }
-                    });
-                    collector.length = Object.keys(collector).length;
-                    //evil hack to convert an array in to a bunch or args,
-                    //spread operator not supported in nodejs without flags.
-                    collector.max = Math.max.apply(null, Object.keys(collector).map(function(q) { 
+            //Get a count of all the unique questions that the user has
+            //answered.
+            models.sequelize.query( 
+                ['SELECT UserId, QuestionId, count(*) as count',
+                 'from UserQuestions WHERE UserId = ' + req.session.user.id,
+                 'and correct = 1',
+                 'group by UserId, QuestionId'].join(' '),
+                {type: models.Sequelize.QueryTypes.SELECT}
+            )
+            .then(function(questions) { //success function
+                //Find out which question has been answered the most by the user
+                //In the case where questions is empty, we g
+                var max = questions.length > 0 ? Math.max.apply(
+                    null, 
+                    questions.map(function(q){
                         return q.count;
-                    }));
-                    return collector;
-                }(answeredQuestions));
+                    })) : 0;
 
-                //If we haven't answered anything, select a random question from
-                //all the questions.
-                if(uniqueAnsweredQuestions.length === 0) {
-                    return models.Question.findAll({
-                        where: {
-                            UserId: {$ne: req.session.user.id}
-                        }
-                    });
-                //Otherwise select a random question from amongst those that
-                //haven't been answered.
-                } else {
-                    return models.Question.findAll({
-                        where: {
-                            id: {$notIn: Object.keys(uniqueAnsweredQuestions)}, 
-                            UserId: {$ne: req.session.user.id}
-                        }
-                    }); //return a Promise
-                }
+                //Determine which questions have been answered during the
+                //current round. E.g. if max is 3, than any question with a
+                //count equal to 3 has been answered and should not be shown to
+                //the user.
+                var answeredQuestions = questions.filter(function(q) {
+                    return q.count === max;
+                });
+
+                //Set up our query to grab a random question. First set the
+                //order to 'random' (TODO if we switch to another SQL dialect
+                //'random' will be changed to 'RAND'). Then select only
+                //questions where that the current user did not create.
+                var query = {
+                    order: [models.Sequelize.fn('random')],
+                    where: {
+                        UserId: {$ne: req.session.user.id}
+                    }
+                };
+
+                //If we have more than one answered question, and we haven't
+                //answered all the questions the same number of times. Select a
+                //question that we haven't answered.
+                if(answeredQuestions.length > 0 && answeredQuestions.length !== questions.length) {
+                    query.where.id = {
+                        $notIn: answeredQuestions.map(function(q) {
+                            return q.QuestionId;
+                        })
+                    };
+                } 
+
+                //Returns a Promise of our executed query
+                return models.Question.findOne(query);
             })
-            .then(function(unansweredQuestions){
-                var questionId = unansweredQuestions[(Math.floor(Math.random() * unansweredQuestions.length))].id; //pick a random, ua question
-                res.redirect('/questions/' + questionId);
+            .then(function(question) {
+                res.render('question-answer', question.dataValues);
             });
         } else {
             res.redirect('/login');
@@ -192,12 +194,11 @@ module.exports = function(app) {
                     UserId: req.session.user.id,
                     QuestionId: question.id
                 })
-                .then(function() {
-                    if(correct) {
-                        res.end('Correct');
-                    } else {
-                        res.end('Wrong');
-                    }
+                .then(function(question) {
+                    res.render('correct', {
+                        answer: question.answer,
+                        correct: question.correct
+                    });
                 });
             });
         }
