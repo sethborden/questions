@@ -9,6 +9,7 @@ Desktop.ini
 
 # Vim stuff
 *.swp
+*.swo
 
 #environment and database
 *.db

@@ -2,7 +2,9 @@
 
 var models = require('../models');
 
+//TODO: figure out how to break this out into a few, simpler functions
 //Redirects to a random, unanswered question
+//Returns a question object.
 exports.random = function(req, res) {
     //Get a count of all the unique questions that the user has
     //answered.

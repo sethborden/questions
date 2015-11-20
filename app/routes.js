@@ -29,4 +29,7 @@ module.exports = function(app) {
     app.put('/questions/:id', isAuthenticated, question.update);
     app.delete('/questions/:id', isAuthenticated, question.destroy);
 
+    //Question API functionality for AJAX calls
+     
+
 };
