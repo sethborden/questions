@@ -3,12 +3,13 @@ html
     head
         title Challenge Mode
         link(rel='stylesheet', href='/stylesheets/style.css')
+        script(type='text/javascript' src='/javascript/script.js')
     body
         ul.menubar
             li.menuitem
                 a(href='/home') Home
             li.menuitem
-                a(href='/random')  Random Question
+                a(href='/random') Random Question
             li.menuitem
                 a(href='/logout') Logout
         -if(message)

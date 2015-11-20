@@ -51,7 +51,7 @@ module.exports = function(grunt) {
     });
 
     grunt.registerTask('default', ['jshint', 'browserify', 'watch']);
-    grunt.registerTask('serve', ['jshint', 'express:dev', 'watch']);
-    grunt.registerTask('debug', ['jshint', 'express:dev', 'node-inspector']);
+    grunt.registerTask('serve', ['jshint', 'browserify', 'express:dev', 'watch']);
+    grunt.registerTask('debug', ['jshint', 'browserify', 'express:dev', 'node-inspector']);
 
 };
