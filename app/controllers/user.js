@@ -14,7 +14,7 @@ exports.postLogin = function(req, res) {
     models.User.findOne({where: {username: req.body.username}})
     .then(function(user) {
         if(!user) { res.redirect('/login'); }
-        if(user.password === req.body.password) {
+        if(user.comparePassword(req.body.password)) {
             req.session.user = user;
             res.redirect('/home');
         } else {
