@@ -3,7 +3,7 @@ extends ./layout.jade
 block content
     h2 Edit Question
     div#edit-question
-        form(method='POST', action='/questions/' + id)
+        form(method='POST', action='/questions/' + id + '?_method=PUT')
             div
                 label(for='question') Question:
                 input(type='text', name='question', value=question)

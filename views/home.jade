@@ -18,4 +18,7 @@ block content
         each question in questions
             li 
                 a(href="/questions/" + question.id) #{question.question}
+                form(class="delete" method='POST', action='/questions/' + question.id + '?_method=DELETE')
+                    input(type='submit', value='X')
+
 

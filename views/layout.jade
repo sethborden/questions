@@ -13,8 +13,9 @@ html
                 a(href='/random') Random Question
             li.menuitem
                 a(href='/logout') Logout
-        -if(message)
-            .alert !{message}
+        for message in flash
+            a.alert(class='alert-' + message.type)
+            p= message.message
         block content
 
 

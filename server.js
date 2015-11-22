@@ -3,6 +3,8 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var session = require('express-session');
+var methodOverride = require('method-override');
+var flash = require('flash');
 var path = require('path');
 var models = require('./app/models');
 
@@ -22,6 +24,8 @@ app.use(session({
     resave: false,
     saveUninitialized: true
 }));
+app.use(methodOverride('_method'));
+app.use(flash());
 
 //Import routes
 require('./app/routes.js')(app);

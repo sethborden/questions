@@ -11,7 +11,7 @@ exports.random = function(req, res) {
     models.sequelize.query( 
         ['SELECT UserId, QuestionId, count(*) as count',
          'from UserQuestions WHERE UserId = ' + req.session.user.id,
-         'and correct = 1',
+         'AND correct = 1', 
          'group by UserId, QuestionId'].join(' '),
         {type: models.Sequelize.QueryTypes.SELECT}
     )
@@ -62,16 +62,19 @@ exports.random = function(req, res) {
     });
 };
 
+//Create a new question
 exports.create = function(req, res) {
     models.Question.create({
         question: req.body.question,
         answer: req.body.answer,
         UserId: req.session.user.id
     }).then(function() {
+        req.flash('info', 'Question created.');
         res.redirect('/home');
     });
 };
 
+//If you own the question, you get to edit it, otherwise you need to answer it
 exports.editOrAnswer = function(req, res) {
     models.Question.findOne({where: {id: req.params.id}})
     .then(function(question) {
@@ -105,10 +108,33 @@ exports.answer = function(req, res) {
 
 //Update a question
 exports.update = function(req, res) {
-    res.send('not implemented');
+    models.Question.find({where: {id: req.params.id}})
+    .then(function(question) {
+        if(!question) { res.send('No such question'); }
+        if(question.UserId === req.session.user.id) {
+            question.updateAttributes({
+                question: req.body.question,
+                answer: req.body.answer
+            })
+            .then(function() {
+                req.flash('info', 'Question has been updated');
+                res.redirect('/questions/' + req.params.id);
+            });
+        }
+    });
 };
 
 //Delete a question
 exports.destroy = function(req, res) {
-    res.send('not implemented');
+    models.Question.find({where: {id: req.params.id}})
+    .then(function(question) {
+        if(!question) { res.send('No such question'); }
+        if(question.UserId === req.session.user.id) {
+            question.destroy()
+            .then(function() {
+                req.flash('info', 'Question has been deleted.');
+                res.redirect('/home');
+            });
+        }
+    });
 };
