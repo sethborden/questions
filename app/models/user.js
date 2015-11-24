@@ -1,11 +1,20 @@
 'use strict';
 
 var bcrypt = require('bcrypt');
+var gravatar = require('gravatar');
 
 module.exports = function(sequelize, DataTypes) {
     var User = sequelize.define('User', {
-        username: DataTypes.STRING,
-        password: DataTypes.STRING
+        username: {
+            type: DataTypes.STRING,
+            unique: true
+        },
+        email: {
+            type: DataTypes.STRING,
+            unique: true
+        },
+        password: DataTypes.STRING,
+        gravatarURL: DataTypes.STRING
     }, {
         classMethods: {
             associate: function(models) {
@@ -21,6 +30,11 @@ module.exports = function(sequelize, DataTypes) {
         setterMethods: {
             password: function(pw) {
                 this.setDataValue('password', bcrypt.hashSync(pw, 10));
+            }
+        },
+        getterMethods: {
+            gravatarURL: function() {
+                return gravatar.url(this.getDataValue('email'));
             }
         },
         instanceMethods: {

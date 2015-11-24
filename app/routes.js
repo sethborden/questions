@@ -18,7 +18,10 @@ module.exports = function(app) {
     app.get('/login', user.getLogin);
     app.post('/login', user.postLogin);
     app.get('/signup', user.getSignup);
+    app.post('/signup', user.postSignup);
     app.get('/logout', user.logout);
+    app.get('/settings', isAuthenticated, user.settings);
+    app.put('/settings/:id', isAuthenticated, user.update);
 
 
     //Question functionality

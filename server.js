@@ -34,8 +34,8 @@ require('./app/routes.js')(app);
 models.sequelize.sync({force: true})
 .then(function() {
     Promise.all([
-        models.User.create({ username: 'Seth', password: 'pass' }),
-        models.User.create({ username: 'Mark', password: 'bill' }),
+        models.User.create({ username: 'Seth', password: 'pass', email: 'seth@mimirate.com' }),
+        models.User.create({ username: 'Mark', password: 'bill', email: 'mark@mimirate.com' }),
         models.Question.create({ question: 'What is the meaning of life?', answer: '42', UserId: 1 }),
         models.Question.create({ question: 'What is the capital of East Timor?', answer: 'Dili', UserId: 1 }),
         models.Question.create({ question: 'Who is the President of the United States', answer: 'Barack Obama', UserId: 2 })

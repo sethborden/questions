@@ -3,7 +3,7 @@
 var models = require('../models');
 var path = require('path');
 
-//TODO: figure out how to break this out into a few, simpler functions
+//TODO: Rework this...it still isn't working correctly.
 //Redirects to a random, unanswered question
 //Returns a question object.
 exports.random = function(req, res) {
@@ -127,7 +127,7 @@ exports.update = function(req, res) {
             })
             .then(function() {
                 req.flash('info', 'Question has been updated');
-                res.redirect('/questions/' + req.params.id);
+                res.redirect('/home');
             });
         }
     });
