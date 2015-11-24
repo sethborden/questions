@@ -19,7 +19,7 @@ html
                 li
                     a(href='/logout') Logout
                 li
-                    &nbsp;
+                     &nbsp;
         while message = flash.shift()
             div.col-md-4.col-md-offset-4.alert(class='alert-' + message.type)
                 p= message.message

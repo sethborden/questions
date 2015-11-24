@@ -13,3 +13,20 @@ form.delete > button.delete-question {
     color: crimson;
 }
 
+.user-info {
+    margin-bottom: 20px;
+}
+
+.user-image {
+    float: left;
+}
+
+.user-username {
+    font-size: 30px;
+    font-weight: 800;
+}
+
+.user-mail {
+    font-weight: 600;
+
+}
