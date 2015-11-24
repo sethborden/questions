@@ -33,31 +33,12 @@ require('./app/routes.js')(app);
 //Kick things off
 models.sequelize.sync({force: true})
 .then(function() {
-
     Promise.all([
-        models.User.create({
-            username: 'Seth',
-            password: 'pass'
-        }),
-        models.User.create({
-            username: 'Mark',
-            password: 'bill'
-        }),
-        models.Question.create({
-            question: 'What is the meaning of life?',
-            answer: '42',
-            UserId: 1
-        }),
-        models.Question.create({
-            question: 'What is the capital of East Timor?',
-            answer: 'Dili',
-            UserId: 1
-        }),
-        models.Question.create({
-            question: 'Who is the Presiden of the United States',
-            answer: 'Barack Obama',
-            UserId: 2
-        })
+        models.User.create({ username: 'Seth', password: 'pass' }),
+        models.User.create({ username: 'Mark', password: 'bill' }),
+        models.Question.create({ question: 'What is the meaning of life?', answer: '42', UserId: 1 }),
+        models.Question.create({ question: 'What is the capital of East Timor?', answer: 'Dili', UserId: 1 }),
+        models.Question.create({ question: 'Who is the President of the United States', answer: 'Barack Obama', UserId: 2 })
     ])
     .then(function() {
         app.listen(port);

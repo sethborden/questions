@@ -1,119 +1,15 @@
-/* smartphones, iPhone, portrait 480x320 phones */ 
-@media (min-width:320px) {
-     
-}
-
-/* portrait e-readers (Nook/Kindle), smaller tablets @ 600 or @ 640 wide. */ 
-@media (min-width:481px) { 
-
-}
-
-/* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones */ 
-@media (min-width:641px) {
-
-}
-
-/* tablet, landscape iPad, lo-res laptops ands desktops */ 
-@media (min-width:961px) {
-
-}
-
-/* big landscape tablets, laptops, and desktops */ 
-@media (min-width:1025px) {
-
-}
-
-/* hi-res laptops and desktops */ 
-@media (min-width:1281px) {
-
-}
-
-html, body {
-    margin: 0;
-    padding: 0;
-    border: 0;
-}
-
-form {
-    width: 300px;
-    border: 1px solid darkblue;
-    background: salmon;
-    padding: 10px;
-    border-radius: 10px;
-    margin: 10px auto 0 auto;
-}
-
 form.delete {
-    width: 10px;
-    border: none;
-    padding: 0 0 0 0;
-    border-radius: 0;
-    margin: 0 0 0 0;
     display: inline-block;
+}
+
+form.delete > button {
     background: none;
+    border: none;
+    heigth: auto;
+    width: auto;
 }
 
-.form-group {
-    height: 30px;
-    padding-top: 5px;
-    padding-bottom: 5p;
-}
-
-label {
-    min-width: 100px;
-    height: 20px;
-    line-height: 20px;
-    text-align: right;
-    margin-right: 10px;
-    display: inline-block;
-}
-
-input[type="text"], input[type="password"] {
-    min-width: 100px;
-    height: 20px;
-    line-height: 20px;
-    text-align: left;
-    display: inline-block;
-}
-
-input[type="submit"] {
-    padding: 10px;
-    min-width: 50px;
-    height: 30px;
-    margin-left: 110px;
-    padding-top: 5px;
-    padding-bottom: 5px;
-}
-
-form.delete > input[type="submit"] {
-    padding: 0 0 0 0;
-    min-width: 10px;
-    height: 18px;
-    margin: 0 0 0 10px;
-}
-
-.signup {
-    width: 100%;
-    text-align: center;
-    margin: 10px;
-}
-
-.menubar {
-    margin: 0 0 10px 0;
-    padding: 0;
-    background: dodgerblue;
-}
-
-.menuitem {
-    display: inline-block;
-    width: 160px;
-    height: 30px;
-    line-height: 30px;
-    text-align: center;
-    margin: 0;
-    background: dodgerblue;
-    color: darkblue;
-    border: 1px solid dodgerblue;
-    cursor: pointer;
+form.delete > button.delete-question {
+    color: crimson;
 }
 

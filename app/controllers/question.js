@@ -1,6 +1,7 @@
 'use strict';
 
 var models = require('../models');
+var path = require('path');
 
 //TODO: figure out how to break this out into a few, simpler functions
 //Redirects to a random, unanswered question
@@ -98,10 +99,18 @@ exports.answer = function(req, res) {
             QuestionId: question.id
         })
         .then(function(question) {
-            res.render('correct', {
-                answer: question.answer,
-                correct: question.correct
-            });
+            var message = [
+                'Your answer of',
+                question.answer,
+                'was',
+                question.correct ? 'correct!' : 'wrong.'
+            ].join(' ');
+            req.flash('info', message);
+            if(path.basename(req.get('Referer')) === 'random') {
+                res.redirect('/random');
+            } else {
+                res.redirect('/home');
+            }
         });
     });
 };
