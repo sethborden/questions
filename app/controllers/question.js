@@ -8,7 +8,7 @@ var path = require('path');
 //Returns a question object.
 exports.random = function(req, res) {
     //Get a count of all the unique questions that the user has
-    //answered.
+    //answered correctly.
     models.sequelize.query( 
         ['SELECT UserId, QuestionId, count(*) as count',
          'from UserQuestions WHERE UserId = ' + req.session.user.id,

@@ -51,7 +51,7 @@ exports.postSignup = function(req, res) {
     models.User.create({
         username: req.body.username,
         password: req.body.password,
-        email: req.body.email,
+        email: req.body.email
     }).then(function(user) {
         req.session.user = user;
         res.redirect('/home');

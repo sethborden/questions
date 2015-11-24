@@ -24,6 +24,20 @@ module.exports = function(grunt) {
             }
         },
         watch: {
+            jade: {
+                files: ['./views/**/*.jade'],
+                tasks: [],
+                options: {
+                    livereload: true
+                }
+            },
+            css: {
+                files: ['./public/**/*.css'],
+                tasks: [],
+                options: {
+                    livereload: true
+                }
+            },
             express: {
                 files: ['server.js', './app/**/*.js'],
                 tasks: ['express:dev'],

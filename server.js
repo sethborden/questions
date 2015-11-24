@@ -1,11 +1,12 @@
 'use strict';
 
+var path = require('path');
 var express = require('express');
+
+var methodOverride = require('method-override');
 var bodyParser = require('body-parser');
 var session = require('express-session');
-var methodOverride = require('method-override');
 var flash = require('flash');
-var path = require('path');
 
 var models = require('./app/models');
 
@@ -20,6 +21,9 @@ app.set('view engine', 'jade');
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
+app.use(require('connect-livereload')({
+    port: 35729
+}));
 app.use(session({
     secret: 'apqowigpowup2424c8n510y 9fh',
     resave: false,

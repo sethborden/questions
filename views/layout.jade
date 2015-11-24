@@ -5,21 +5,34 @@ html
 
         link(rel='stylesheet', href='/stylesheets/style.css')
         link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
+
         script(type='text/javascript' src='/javascript/script.js')
+
+        meta(name='viewport', content='width=device-width, initial-scale=1')
     body
         nav.navbar.navbar-default
-            ul.nav.navbar-nav
-                li
-                    a(href='/home') Home
-                li
-                    a(href='/random') Random Question
-                li
-                    a(href='/settings') Settings
-                li
-                    a(href='/logout') Logout
+            div.container-fluid
+                div.navbar-header
+                    button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#navbar-collapse', aria-expanded='false')
+                        span.sr-only
+                            Toggle Navigation
+                        span.icon-bar
+                        span.icon-bar
+                        span.icon-bar
+
+            div.collapse.navbar-collapse#navbar-collapse
+                ul.nav.navbar-nav
+                    li
+                        a(href='/home') Home
+                    li
+                        a(href='/random') Random Question
+                    li
+                        a(href='/settings') Settings
+                    li
+                        a(href='/logout') Logout
         while message = flash.shift()
             div.col-md-4.col-md-offset-4.alert(class='alert-' + message.type)
-                p= message.message
+                p.col-md-10.col-md-offset-1= message.message
         block content
 
 
