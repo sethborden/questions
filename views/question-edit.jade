@@ -1,13 +1,18 @@
 extends ./layout.jade
 
 block content
-    div.col-md-4.col-md-offset-4#edit-question
-        form.form-horizontal(method='POST', action='/questions/' + id + '?_method=PUT')
-            div.form-group
-                label(for='question') Question:
-                input.form-control(type='text', name='question', value=question)
-            div.form-group
-                label(for='answer') Answer:
-                input.form-control(type='text', name='answer', value=answer)
-            div.form-group
-                input.btn.btn-primary(type='submit', value='Update Question')
+    div.col-md-4.col-md-offset-4
+        div.panel.panel-primary
+            div.panel-heading
+                div.panel-title.
+                    Edit Question
+            div.panel-body
+                form.form-horizontal.col-md-10.col-md-offset-1(method='POST', action='/questions/' + id + '?_method=PUT')
+                    div.form-group
+                        label(for='question') Question:
+                        input.form-control(type='text', name='question', value=question)
+                    div.form-group
+                        label(for='answer') Answer:
+                        input.form-control(type='text', name='answer', value=answer)
+                    div.form-group
+                        input.btn.btn-primary(type='submit', value='Update Question')

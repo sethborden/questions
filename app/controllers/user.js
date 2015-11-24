@@ -14,7 +14,6 @@ exports.settings = function(req, res) {
 };
 
 exports.update = function(req, res) {
-    console.log(req.body);
     models.User.findOne({where: {username: req.body.username}})
     .then(function(user) {
         return user.updateAttributes({
@@ -69,7 +68,6 @@ exports.logout = function(req, res) {
 
 //Returns a users homepage
 exports.home = function(req, res) {
-    console.log(req.session.user);
     models.Question.findAll({where: {UserId: req.session.user.id}})
     .then(function(questions) {
         res.render('home', {

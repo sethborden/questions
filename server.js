@@ -6,6 +6,7 @@ var session = require('express-session');
 var methodOverride = require('method-override');
 var flash = require('flash');
 var path = require('path');
+
 var models = require('./app/models');
 
 var port = process.env.PORT || 8080;
@@ -38,7 +39,7 @@ models.sequelize.sync({force: true})
         models.User.create({ username: 'Mark', password: 'bill', email: 'mark@mimirate.com' }),
         models.Question.create({ question: 'What is the meaning of life?', answer: '42', UserId: 1 }),
         models.Question.create({ question: 'What is the capital of East Timor?', answer: 'Dili', UserId: 1 }),
-        models.Question.create({ question: 'Who is the President of the United States', answer: 'Barack Obama', UserId: 2 })
+        models.Question.create({ question: 'Who is the President of the United States?', answer: 'Barack Obama', UserId: 2 })
     ])
     .then(function() {
         app.listen(port);

@@ -1,12 +1,14 @@
 extends ./layout.jade
 
 block content
-    div.col-md-4.col-md-offset-4#edit-question
-        form.form-horizontal(method='POST', action='/questions/' + id)
-            div.form-group
-                h2 #{question}
-            div.form-group
-                label(for='answer') Answer:
-                input.form-control(type='text', name='answer', autofocus)
-            div.form-group
-                input.btn.btn-success(type='submit', value='Answer Question')
+    div.col-md-4.col-md-offset-4
+        div.panel.panel-success
+            div.panel-body
+                form.form-horizontal.col-md-10.col-md-offset-1(method='POST', action='/questions/' + id)
+                    div.form-group
+                        h2 #{question}
+                    div.form-group
+                        label(for='answer') Answer:
+                        input.form-control(type='text', name='answer', autofocus)
+                    div.form-group
+                        input.btn.btn-success(type='submit', value='Answer Question')
