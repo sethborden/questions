@@ -1,6 +1,6 @@
 ## Installation
 
-> git clone https://github.com/sethborden/questions.git && npm install
+`git clone https://github.com/sethborden/questions.git && npm install`
 
 Questions uses the bcrypt package which in turn uses node-gyp.  If you're
 installing under Windows this sometimes causes issues which can be resolved
