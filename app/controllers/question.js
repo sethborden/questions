@@ -77,7 +77,14 @@ exports.create = function(req, res) {
 
 //If you own the question, you get to edit it, otherwise you need to answer it
 exports.editOrAnswer = function(req, res) {
-    models.Question.findOne({where: {id: req.params.id}})
+    models.Question.findOne({
+        where: {id: req.params.id}, 
+        include: [
+            {
+                model: models.Tag
+            }
+        ]
+    })
     .then(function(question) {
         if(question.UserId === req.session.user.id) {
             res.render('question-edit', question.dataValues);
@@ -145,5 +152,32 @@ exports.destroy = function(req, res) {
                 res.redirect('/home');
             });
         }
+    });
+};
+
+//Add a tag to a question
+exports.addTagToQuestion = function(req, res) {
+    Promise.all([
+        models.Question.findOne({id: req.params.id}),
+        models.Tag.findOrCreate({where: {name: req.body.tag}})
+    ])
+    .then(function(values) {
+        var question = values[0];
+        var tag = values[1][0];
+        question.addTag(tag)
+        .then(function() {
+            res.redirect('/questions/' + req.params.id);
+        });
+    });
+};
+
+//Delete a tag from a question
+exports.deleteTagFromQuestion = function(req, res) {
+    models.Question.findById(req.params.id)
+    .then(function(question) {
+        return question.removeTag(req.params.tagId);
+    })
+    .then(function() {
+        res.redirect('/questions/' + req.params.id);
     });
 };

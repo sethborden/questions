@@ -30,3 +30,33 @@ form.delete > button.delete-question {
     font-weight: 600;
 
 }
+
+li.tag-list-group-item {
+    display: inline-block;
+    border: 1px solid #ccc;
+    background: crimson;
+    color: white;
+    border-radius: 5px;
+    height: 36px;
+    line-height: 36px;
+    padding: 0 8px 0 8px;
+    margin-left: 4px;
+}
+
+li.tag-list-group-item:first-of-type {
+    margin-left: 0;
+}
+
+input.tag-list-group-item-delete {
+    border: none;
+    background: crimson;
+    height: 34px;
+    line-height: 34px;
+    margin: 0;
+}
+
+
+input.tag-list-group-item-delete:hover {
+    cursor: pointer;
+    color: black;
+}

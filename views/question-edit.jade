@@ -16,3 +16,17 @@ block content
                         input.form-control(type='text', name='answer', value=answer)
                     div.form-group
                         input.btn.btn-primary(type='submit', value='Update Question')
+                form.form-horizontal.col-md-10.col-md-offset-1(method='POST', action='/questions/' + id + '/tag')
+                    div.form-group
+                        label(for='tag') Tag:
+                        input.form-control(type='text', name='tag', value=)
+                    div.form-group
+                        input.btn.btn-primary(type='submit', value='Add Tag')
+                ul.tag-list
+                    each tag in Tags
+                        li.tag-list-group-item
+                            span.
+                                #{tag.get('name')} 
+                            form.delete(method='POST', action='/questions/' + id + '/tag/' + tag.get('id') + '?_method=DELETE')
+                                input.tag-list-group-item-delete(type='submit', value='X')
+

@@ -19,6 +19,7 @@ module.exports = function(sequelize, Datatypes) {
                         unique: false
                     }
                 });
+                Question.belongsToMany(models.Tag, {through: 'QuestionTag'});
             }
         }
     });

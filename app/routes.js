@@ -31,6 +31,8 @@ module.exports = function(app) {
     app.post('/questions/:id', isAuthenticated, question.answer);
     app.put('/questions/:id', isAuthenticated, question.update);
     app.delete('/questions/:id', isAuthenticated, question.destroy);
+    app.post('/questions/:id/tag', isAuthenticated, question.addTagToQuestion);
+    app.delete('/questions/:id/tag/:tagId', isAuthenticated, question.deleteTagFromQuestion);
 
     //Question API functionality for AJAX calls
      
