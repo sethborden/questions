@@ -15,7 +15,7 @@ module.exports = function(sequelize, Datatypes) {
                 });
                 Question.belongsToMany(models.User, {
                     through: {
-                        model: models.UserQuestions,
+                        model: models.userquestions,
                         unique: false
                     }
                 });

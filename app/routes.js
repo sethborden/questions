@@ -34,6 +34,10 @@ module.exports = function(app) {
     app.post('/questions/:id/tag', isAuthenticated, question.addTagToQuestion);
     app.delete('/questions/:id/tag/:tagId', isAuthenticated, question.deleteTagFromQuestion);
 
+    //Tag functionality
+    app.get('/tags', isAuthenticated, question.tagIndex);
+    app.get('/tags/:name', isAuthenticated, question.showTag);
+
     //Question API functionality for AJAX calls
      
 

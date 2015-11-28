@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = function(sequelize, DataTypes) {
-    var UserQuestions = sequelize.define('UserQuestions', {
+    var UserQuestions = sequelize.define('userquestions', {
         answer: DataTypes.STRING,
         correct: DataTypes.BOOLEAN,
         id: {

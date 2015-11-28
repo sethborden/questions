@@ -35,18 +35,47 @@ app.use(flash());
 //Import routes
 require('./app/routes.js')(app);
 
+//Importer function to load questions
+var questions = [
+    {
+        question: 'What is the meaning of life?',
+        answer: '42',
+        Tags: ['life'],
+        UserId: 1
+    },
+    {
+        question: 'What is capital of East Timor?',
+        answer: 'Dili',
+        Tags: ['geography'],
+        UserId: 1
+    },
+    {
+        question: 'What is the capital of Vermont?',
+        answer: 'Montpelier',
+        Tags: ['geography'],
+        UserId: 1
+    },
+    {
+        question: 'What is capital of New Hampshire?',
+        Tags: ['geography'],
+        UserId: 1
+    }
+];
+
 //Kick things off
 models.sequelize.sync({force: true})
 .then(function() {
     Promise.all([
         models.User.create({ username: 'Seth', password: 'pass', email: 'seth@mimirate.com' }),
         models.User.create({ username: 'Mark', password: 'bill', email: 'mark@mimirate.com' }),
-        models.Question.create({ question: 'What is the meaning of life?', answer: '42', UserId: 1 }),
-        models.Question.create({ question: 'What is the capital of East Timor?', answer: 'Dili', UserId: 1 }),
-        models.Question.create({ question: 'Who is the President of the United States?', answer: 'Barack Obama', UserId: 2 })
+        Promise.all(questions.map(function(q) {
+            return models.Question.create(q);
+        }))
     ])
     .then(function() {
         app.listen(port);
         console.log('App listening on http://localhost:', port);
+    }, function(err) {
+        console.log(err);
     });
 });
