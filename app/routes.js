@@ -1,6 +1,7 @@
 'use strict';
 var user = require('./controllers/user');
 var question = require('./controllers/question');
+var tag = require('./controllers/tag');
 
 //custome middleware to ensure that our user is authenticated
 var isAuthenticated = function(req, res, next) {
@@ -31,12 +32,14 @@ module.exports = function(app) {
     app.post('/questions/:id', isAuthenticated, question.answer);
     app.put('/questions/:id', isAuthenticated, question.update);
     app.delete('/questions/:id', isAuthenticated, question.destroy);
-    app.post('/questions/:id/tag', isAuthenticated, question.addTagToQuestion);
-    app.delete('/questions/:id/tag/:tagId', isAuthenticated, question.deleteTagFromQuestion);
+
+
 
     //Tag functionality
-    app.get('/tags', isAuthenticated, question.tagIndex);
-    app.get('/tags/:name', isAuthenticated, question.showTag);
+    app.get('/tags', isAuthenticated, tag.tagIndex);
+    app.get('/tags/:name', isAuthenticated, tag.showTag);
+    app.post('/questions/:id/tag', isAuthenticated, tag.addTagToQuestion);
+    app.delete('/questions/:id/tag/:tagId', isAuthenticated, tag.deleteTagFromQuestion);
 
     //Question API functionality for AJAX calls
      

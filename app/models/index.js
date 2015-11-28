@@ -5,7 +5,19 @@ var path      = require('path');
 var Sequelize = require('sequelize');
 var env       = process.env.NODE_ENV || 'development';
 var config    = require(path.resolve('./config/config.json'))[env];
-var sequelize = new Sequelize(config.database, config.username, config.password, config);
+var sequelize = new Sequelize(
+        process.env.DATABASE || config.database, 
+        process.env.USERNAME || config.username, 
+        process.env.PASSWORD || config.password, 
+        {
+            dialect: process.env.DIALECT || config.dialect,
+            host: process.env.HOST || config.host,
+            port: process.env.PG_PORT || config.port,
+            database: process.env.DATABASE || config.database,
+            username: process.env.USERNAME || config.username,
+            password: process.env.PASSWORD || config.password
+        }
+    );
 var db        = {};
 
 fs

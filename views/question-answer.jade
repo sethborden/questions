@@ -17,6 +17,6 @@ block content
                     each tag in Tags
                         li.tag-list-group-item
                             span.
-                                #{tag.get('name')} 
+                                #{tag.get('name')}
                             form.delete(method='POST', action='/questions/' + id + '/tag/' + tag.get('id') + '?_method=DELETE')
-                                input.tag-list-group-item-delete(type='submit', value='X')
+
