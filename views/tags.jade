@@ -1,0 +1,17 @@
+extends ./layout.jade
+
+block content
+    div.col-md-4.col-md-offset-4#create-question
+        div.panel.panel-primary
+            div.panel-heading
+                div.panel-title.
+                    Tags
+            div.panel-body
+                if tags
+                    ul.list-group
+                        each tag in tags
+                            li.list-group-item
+                                a(href='/tags/' + tag.name) #{tag.name}
+                else
+                    div.
+                        No tags found!

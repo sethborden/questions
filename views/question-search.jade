@@ -1,0 +1,31 @@
+extends ./layout.jade
+
+block content
+    if questions.length
+        div.col-md-4.col-md-offset-4#question-list
+            div.panel.panel-primary
+                div.panel-heading
+                    div.panel-title.
+                        Questions tagged #{tag}
+                div.panel-body
+                    ul.list-group
+                        each question in questions
+                            li.list-group-item
+                                a(href="/questions/" + question.id) #{question.question}&nbsp;
+                                form.delete(method='POST', action='/questions/' + question.id + '?_method=DELETE')
+                                    button.clear-fix.btn.btn-danger.delete-question(type="submit")
+                                        small
+                                            span.glyphicon.glyphicon-trash
+    else
+        div.col-md-4.col-md-offset-4
+            div.panel.panel-primary
+                div.panel-heading
+                    div.panel-title.
+                        No questions found tagged #{tag}.
+                div.panel-body
+                    form.form-horizontal.col-md-10.col-md-offset-1(method='GET', action='/tags')
+                        div.form-group
+                            label(for='tag') Tag:
+                            input.form-control(type='text', name='tag', placeholder='Tag to search for.')
+                        div.form-group
+                            input.btn.btn-primary(type='submit', value='Search')
