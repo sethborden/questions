@@ -57,10 +57,30 @@ var questions = [
     },
     {
         question: 'What is capital of New Hampshire?',
+        answer: 'Concord',
         Tags: ['geography'],
         UserId: 1
     }
 ];
+
+//TODO break this out into a separate helper module.
+var importQuestions = function(questions) {
+    return Promise.all(
+        questions.map(function(question) {
+            models.Question.create(question).
+            then(function(q) {
+                return Promise.all(
+                    question.Tags.map(function(tag) {
+                        models.Tag.findOrCreate({where: {name: tag}})
+                        .then(function(tag) {
+                            q.addTag(tag[0]);
+                        });
+                    })
+                );
+            });
+        })
+    );
+};
 
 //Kick things off
 models.sequelize.sync({force: true})
@@ -68,9 +88,7 @@ models.sequelize.sync({force: true})
     Promise.all([
         models.User.create({ username: 'Seth', password: 'pass', email: 'seth@mimirate.com' }),
         models.User.create({ username: 'Mark', password: 'bill', email: 'mark@mimirate.com' }),
-        Promise.all(questions.map(function(q) {
-            return models.Question.create(q);
-        }))
+        importQuestions(questions)
     ])
     .then(function() {
         app.listen(port);

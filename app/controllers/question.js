@@ -60,7 +60,12 @@ exports.random = function(req, res) {
         return models.Question.findOne(query);
     })
     .then(function(question) {
-        res.render('question-answer', question.dataValues);
+        if(question) {
+            res.render('question-answer', question.dataValues);
+        } else {
+            req.flash('danger', 'No random questions available.');
+            res.redirect('/home');
+        }
     });
 };
 
@@ -158,7 +163,6 @@ exports.destroy = function(req, res) {
 
 //Add a tag to a question
 exports.addTagToQuestion = function(req, res) {
-    console.log(req.params.id);
     Promise.all([
         models.Question.findById(req.params.id),
         models.Tag.findOrCreate({where: {name: req.body.tag}})
@@ -166,7 +170,6 @@ exports.addTagToQuestion = function(req, res) {
     .then(function(values) {
         var question = values[0];
         var tag = values[1][0];
-        console.log(question.question);
         question.addTag(tag)
         .then(function() {
             res.redirect('/questions/' + req.params.id);
@@ -192,7 +195,6 @@ exports.tagIndex = function(req, res) {
     } else {
         models.Tag.findAndCountAll()
         .then(function(tags) {
-            console.log(tags);
             res.render('tags', {tags: tags.rows, count: tags.count});
         });
     }
