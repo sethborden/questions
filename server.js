@@ -35,36 +35,11 @@ app.use(flash());
 //Import routes
 require('./app/routes.js')(app);
 
-//Importer function to load questions
-var questions = [
-    {
-        question: 'What is the meaning of life?',
-        answer: '42',
-        Tags: ['life'],
-        UserId: 1
-    },
-    {
-        question: 'What is capital of East Timor?',
-        answer: 'Dili',
-        Tags: ['geography'],
-        UserId: 1
-    },
-    {
-        question: 'What is the capital of Vermont?',
-        answer: 'Montpelier',
-        Tags: ['geography'],
-        UserId: 1
-    },
-    {
-        question: 'What is capital of New Hampshire?',
-        answer: 'Concord',
-        Tags: ['geography'],
-        UserId: 1
-    }
-];
-
 //TODO break this out into a separate helper module.
+//This could be significantly flattened, but we need a pyramid for old time's
+//sake.
 var importQuestions = function(questions) {
+    console.log(questions);
     return Promise.all(
         questions.map(function(question) {
             models.Question.create(question).
@@ -88,7 +63,7 @@ models.sequelize.sync({force: true})
     Promise.all([
         models.User.create({ username: 'Seth', password: 'pass', email: 'seth@mimirate.com' }),
         models.User.create({ username: 'Mark', password: 'bill', email: 'mark@mimirate.com' }),
-        importQuestions(questions)
+        importQuestions(require('./questions')())
     ])
     .then(function() {
         app.listen(port);

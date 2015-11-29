@@ -1,6 +1,7 @@
 'use strict';
 var user = require('./controllers/user');
 var question = require('./controllers/question');
+var questionAPI = require('./controllers/question.api');
 var tag = require('./controllers/tag');
 
 //custome middleware to ensure that our user is authenticated
@@ -33,8 +34,6 @@ module.exports = function(app) {
     app.put('/questions/:id', isAuthenticated, question.update);
     app.delete('/questions/:id', isAuthenticated, question.destroy);
 
-
-
     //Tag functionality
     app.get('/tags', isAuthenticated, tag.tagIndex);
     app.get('/tags/:name', isAuthenticated, tag.showTag);
@@ -42,6 +41,7 @@ module.exports = function(app) {
     app.delete('/questions/:id/tag/:tagId', isAuthenticated, tag.deleteTagFromQuestion);
 
     //Question API functionality for AJAX calls
-     
+    app.get('/api/questions', isAuthenticated, questionAPI.index); 
+    app.get('/api/random', isAuthenticated, questionAPI.random); 
 
 };

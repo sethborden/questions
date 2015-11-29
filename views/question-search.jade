@@ -12,10 +12,6 @@ block content
                         each question in questions
                             li.list-group-item
                                 a(href="/questions/" + question.id) #{question.question}&nbsp;
-                                form.delete(method='POST', action='/questions/' + question.id + '?_method=DELETE')
-                                    button.clear-fix.btn.btn-danger.delete-question(type="submit")
-                                        small
-                                            span.glyphicon.glyphicon-trash
     else
         div.col-md-4.col-md-offset-4
             div.panel.panel-primary

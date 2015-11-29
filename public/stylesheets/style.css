@@ -9,9 +9,14 @@ form.delete > button {
     width: auto;
 }
 
-form.delete > button.delete-question {
+button.delete-question {
     color: crimson;
 }
+
+button.delete-question:hover {
+    color: white;
+}
+
 
 .user-info {
     margin-bottom: 20px;
@@ -43,6 +48,11 @@ li.tag-list-group-item {
     margin-left: 4px;
 }
 
+li.tag-list-group-item > a {
+    color: white;
+    text-decoration: none;
+}
+
 li.tag-list-group-item:first-of-type {
     margin-left: 0;
 }
@@ -59,4 +69,12 @@ input.tag-list-group-item-delete {
 input.tag-list-group-item-delete:hover {
     cursor: pointer;
     color: black;
+}
+
+hr.form-divider {
+    height: 2px;
+    background-color: #337ab7;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 75%;
 }
