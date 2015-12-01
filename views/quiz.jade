@@ -1,0 +1,34 @@
+extends ./layout.jade
+
+block content
+    div.col-md-4.col-md-offset-4.user-info
+        img.user-image(src="http://" + user.gravatarURL + "?s=68")
+        div.user-name
+            div.user-username.
+                #{user.username} 
+            div.user-email.
+                #{user.email}
+    div.col-md-4.col-md-offset-4#create-question
+        div.panel.panel-primary
+            div.panel-heading
+                div.panel-title
+                    span.
+                        Create a Quiz
+            div.panel-body
+                form.form-horizontal.col-md-10.col-md-offset-1(method='POST', action='/quiz')
+                    div.form-group
+                        label(for='name') Quiz Name:
+                        input.form-control(type='text', name='name', placeholder='Quiz Name')
+                    div.form-group
+                        input.btn.btn-primary(type='submit', value='Create a Quiz')
+    if quizzes.length > 0
+        div.col-md-4.col-md-offset-4#question-list
+            div.panel.panel-primary
+                div.panel-heading
+                    div.panel-title.
+                        #{user.username}'s Quizzes
+                div.panel-body
+                    ul.list-group
+                        each quiz in quizzes
+                            li.list-group-item
+                                a(href="/quiz/" + quiz.id) #{quiz.name}&nbsp;

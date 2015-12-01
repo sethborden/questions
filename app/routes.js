@@ -3,6 +3,7 @@ var user = require('./controllers/user');
 var question = require('./controllers/question');
 var questionAPI = require('./controllers/question.api');
 var tag = require('./controllers/tag');
+var quiz = require('./controllers/quiz');
 
 //custome middleware to ensure that our user is authenticated
 var isAuthenticated = function(req, res, next) {
@@ -39,6 +40,12 @@ module.exports = function(app) {
     app.get('/tags/:name', isAuthenticated, tag.showTag);
     app.post('/questions/:id/tag', isAuthenticated, tag.addTagToQuestion);
     app.delete('/questions/:id/tag/:tagId', isAuthenticated, tag.deleteTagFromQuestion);
+
+    //Quiz functionality
+    app.get('/quiz', isAuthenticated, quiz.index);
+    app.get('/quiz/:id', isAuthenticated, quiz.show);
+    app.post('/quiz', isAuthenticated, quiz.create);
+    app.post('/quiz/:id/add', isAuthenticated, quiz.addQuestionToQuiz);
 
     //Question API functionality for AJAX calls
     app.get('/api/questions', isAuthenticated, questionAPI.index); 

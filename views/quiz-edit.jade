@@ -1,0 +1,23 @@
+extends ./layout.jade
+
+block content
+    div.col-md-4.col-md-offset-4.user-info
+        img.user-image(src="http://" + user.gravatarURL + "?s=68")
+        div.user-name
+            div.user-username.
+                #{user.username} 
+            div.user-email.
+                #{user.email}
+    div.col-md-4.col-md-offset-4#create-question
+        div.panel.panel-primary
+            div.panel-heading
+                div.panel-title
+                    span.
+                        Add Question To Quiz
+            div.panel-body
+                form.form-horizontal.col-md-10.col-md-offset-1(method='POST', action='/quiz/' + quiz.id + '/add')
+                    div.form-group
+                        label(for='questionId') Quiz Name:
+                        input.form-control(type='text', name='questionId', placeholder='Question ID')
+                    div.form-group
+                        input.btn.btn-primary(type='submit', value='Add Question')
