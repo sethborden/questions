@@ -71,51 +71,28 @@ exports.removeQuestionFromQuiz = function(req, res) {
 };
 
 exports.scoreQuiz = function(req, res) {
-    //helper function to sort answers by id
-    var questionSort = function(q1, q2) {
-        if(q1.id > q2.id) {
-            return 1;
-        }
-        if(q1.id < q2.id) {
-            return -1;
-        }
-        return 0;
-    };
-
-    //Get everything from the response body that's a quiz answer
-    var responses = (function() {
-        var tempObject = {};
-        for(var key in req.body) {
-            if(key.indexOf('quiz-response-') > -1) {
-                tempObject[key] = req.body[key];
-            }
-        }
-        return tempObject;
-    }());
-
-    //TODO PICK UP FROM HERE<S-F1><S-F1>
-
     //Get the quiz
     models.Quiz.findById(req.params.id, {include: [models.Question]})
-    //Get all the questions in the quiz
     .then(function(quiz) {
-      return quiz.Questions.sort(questionSort);
-    })
-    .then(function() {
-        res.send(responses);
+        var correctedQuiz = quiz.Questions.map(function(q) {
+            return {
+                question: q.question,
+                correctAnswer: q.answer,
+                providedAnswer: req.body[q.id] || 'none',
+                correct: q.answer === req.body[q.id]
+            };
+        });
+        var correctCount = correctedQuiz.filter(function(q) {
+            return q.correct === true;
+        }).length;
+        var totalCount = correctedQuiz.length;
+        res.render('quiz-results', {
+            quiz: quiz, 
+            results: {
+                correct: correctCount,
+                total: totalCount,
+                answers: correctedQuiz
+            }
+        });
     });
-
-    //Create a new object in the form of:
-    //{
-    //  correct: n, 
-    //  total: m, 
-    //  answers: [
-    //    {
-    //      yourAnswer: 'foo', 
-    //      correctAnswer: 'bar'
-    //    }
-    //  ]
-    //}
-    //...and render it using the 'quiz-corrected' template
-
 };

@@ -78,3 +78,14 @@ hr.form-divider {
     margin-bottom: 20px;
     width: 75%;
 }
+
+.answer-correct {
+    color: forestgreen;
+    padding: 5px;
+}
+
+.answer-incorrect {
+    color: crimson;
+    padding: 5px;
+    text-decoration: line-through;
+}
