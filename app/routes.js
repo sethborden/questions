@@ -47,6 +47,7 @@ module.exports = function(app) {
     app.post('/quiz', isAuthenticated, quiz.create);
     app.post('/quiz/:id/add', isAuthenticated, quiz.addQuestionToQuiz);
     app.delete('/quiz/:id/:questionId', isAuthenticated, quiz.removeQuestionFromQuiz);
+    app.post('/quiz/:id', isAuthenticated, quiz.scoreQuiz);
 
     //Question API functionality for AJAX calls
     app.get('/api/questions', isAuthenticated, questionAPI.index); 

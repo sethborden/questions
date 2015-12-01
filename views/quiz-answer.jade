@@ -1,0 +1,16 @@
+extends ./layout.jade
+
+block content
+    div.col-md-4.col-md-offset-4
+        div.panel.panel-primary
+            div.panel-heading
+                div.panel-title.
+                    #{quiz.name}
+            div.panel-body
+                    form.form-horizontal.col-md-10.col-md-offset-1(method='POST', action='/quiz/' + quiz.id)
+                            each question in quiz.Questions
+                                div.form-group
+                                    label(for='quiz-response-' + question.id) #{question.question}
+                                    input.form-control(type='text', name='quiz-response-' + question.id, autocomplete='off')
+                            div.form-group
+                                input.btn.btn-primary(type='submit', value='Complete Quiz')

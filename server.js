@@ -63,7 +63,12 @@ models.sequelize.sync({force: true})
     Promise.all([
         models.User.create({ username: 'Seth', password: 'pass', email: 'seth@mimirate.com' }),
         models.User.create({ username: 'Mark', password: 'bill', email: 'mark@mimirate.com' }),
-        importQuestions(require('./questions')())
+        importQuestions(require('./questions')()),
+        //Create a dummy quiz
+        models.Quiz.create({ name: 'Country Capitals'})
+        .then(function(quiz) {
+            return quiz.addQuestions([3, 4, 5]);
+        })
     ])
     .then(function() {
         app.listen(port);
