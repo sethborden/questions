@@ -2,7 +2,10 @@ extends ./layout.jade
 
 block content
     div.col-md-4.col-md-offset-4
-        div.panel.panel-success
+        div.panel.panel-primary
+            div.panel-heading
+                div.panel-title.
+                    Question
             div.panel-body
                 form.form-horizontal.col-md-10.col-md-offset-1(method='POST', action='/questions/' + id)
                     div.form-group
@@ -10,9 +13,9 @@ block content
                             #{question}
                     div.form-group
                         label(for='answer') Answer:
-                        input.form-control(type='text', name='answer', autofocus)
+                        input.form-control(type='text', name='answer', autofocus, autocomplete="off")
                     div.form-group.text-center
-                        input.btn.btn-success(type='submit', value='Answer Question')
+                        input.btn.btn-primary(type='submit', value='Answer Question')
                 hr.form-divider
                 ul.tag-list
                     each tag in Tags
